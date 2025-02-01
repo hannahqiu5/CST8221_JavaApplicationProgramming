@@ -12,7 +12,8 @@ public class LeaderboardUI extends JPanel {
 
 
 	/**
-	 * To show player's ranks and their current scores
+	 * To show player's ranks and their current scores.
+	 * (JLabels inside JPanel using GridLayout)
 	 */
 	private static final long serialVersionUID = 305378614847137360L;
 
@@ -41,9 +42,9 @@ public class LeaderboardUI extends JPanel {
 		    ImageIcon scaledIcon = new ImageIcon(scaledImg);
 			JLabel medal = new JLabel(scaledIcon);
 			JLabel name = new JLabel(names[i]);
-			name.setFont(new Font("SansSerif", Font.PLAIN, 14));
+			name.setFont(new Font("SansSerif", Font.PLAIN, 16));
 			JLabel score = new JLabel(scores[i]);
-			score.setFont(new Font("SansSerif", Font.PLAIN, 14));
+			score.setFont(new Font("SansSerif", Font.PLAIN, 16));
 			
 			this.add(medal);
 			this.add(name);

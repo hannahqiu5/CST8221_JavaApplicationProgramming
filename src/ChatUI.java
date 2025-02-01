@@ -9,19 +9,19 @@ import javax.swing.JTextArea;
 
 public class ChatUI extends JPanel{
 	/**
-	 * The chat area contains two sections (JPanels) 
-	 * -- one to display chat history and the other 
-	 * to let user edit and send their message. 
-	 * 
+	 * The chat area (JPanel with vertical BoxLayout)
+	 * contains two sections (JPanels) -- one to display chat history 
+	 * (JTextArea and JScrollPane) and the other to let user edit 
+	 * (JTextArea) and send (JButton) their message. 
 	 * 
 	 */
 	private static final long serialVersionUID = -3304986041555324967L;
 
 	ChatUI(){
 		// top section -- for displaying chat history
-		JTextArea chatHistory = new JTextArea("", 20, 20); // JTextArea to contain messages
+		JTextArea chatHistory = new JTextArea("", 20, 20); // to contain messages
 		chatHistory.setEditable(false);
-		JScrollPane topSection = new JScrollPane(chatHistory); //JScrollPabe to contain JTextArea
+		JScrollPane topSection = new JScrollPane(chatHistory); // to contain JTextArea
 		chatHistory.setBackground(new Color(255, 185, 140 ));
 		
 		
@@ -33,7 +33,7 @@ public class ChatUI extends JPanel{
 		bottomSection.add(inputBox);
 		bottomSection.add(sendButton);
 		
-		this.setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
+		this.setLayout(new BoxLayout(this,BoxLayout.Y_AXIS)); 
 		this.add(topSection);
 		this.add(bottomSection);
 		
