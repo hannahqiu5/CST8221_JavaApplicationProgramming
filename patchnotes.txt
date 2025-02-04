@@ -1,0 +1,6 @@
+1. In my proposal I wrote sizes for each component, but in my code I only set size the my JFrame because 
+the default size by layout manager works well.
+2. In the proposal, the component for leaderboard was JList but when writing the code I found JPanel is 
+more suitable.
+3. I didn't mention JPanel for the chat area in my proposal, but I used it in my code.
+4. JTextField was used for showing announcements, but I did not mention it in A11.
