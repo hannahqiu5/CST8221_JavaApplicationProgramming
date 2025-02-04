@@ -3,12 +3,14 @@ import java.awt.Dimension;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-
+/**
+ * The primary container of the game. It has three sections -- menu, gameZone 
+ * and rightPanel. The rightPanel is further divided into topSection and 
+ * bottomSection, containing LeaderboardUI and ChatUI, respectively. 
+ */
 public class UI {
 	/**
-	 * The primary container of the game. It has three sections -- menu, gameZone 
-	 * and rightPanel. The rightPanel is further divided into topSection and 
-	 * bottomSection, containing LeaderboardUI and ChatUI, respectively. 
+	 * display the UI
 	 */
 	public void display() {
 		JFrame frame = new JFrame("Crazy Eights");
@@ -38,5 +40,12 @@ public class UI {
 		frame.pack();
 		
 	}
+	
+	/** 
+	 * default constructor 
+	 */
+	
+	
+	public UI() {}
 
 }

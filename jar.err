@@ -1,0 +1,7 @@
+java.io.FileNotFoundException: MANIFEST.MF (The system cannot find the file specified)
+	at java.base/java.io.FileInputStream.open0(Native Method)
+	at java.base/java.io.FileInputStream.open(FileInputStream.java:213)
+	at java.base/java.io.FileInputStream.<init>(FileInputStream.java:152)
+	at java.base/java.io.FileInputStream.<init>(FileInputStream.java:106)
+	at jdk.jartool/sun.tools.jar.Main.run(Main.java:276)
+	at jdk.jartool/sun.tools.jar.Main.main(Main.java:1708)

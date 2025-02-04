@@ -3,10 +3,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-import java.awt.Insets;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -14,17 +11,19 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
+/**
+ * The area (JPanel with BorderLayout) is to play cards and receive announcements.
+ * East, North and West panel (BoxLayout) -- opponent's name (JLabel in JPanel) and their cards （JButton in JPanel using Flowlayout)
+ * South panel (GridLayout) -- announcement (JTextField in JPanel using FlowLayout) and my cards (JButtons in JPanel using FlowLayout)
+ * Center (GridLayout） -- the last card and card stack to draw from (JButtons)
+ * 
+ */
 public class GameZoneUI extends JPanel {
-	/**
-	 * The area (JPanel with BorderLayout) is to play cards and receive announcements.
-	 * East, North and West panel (BoxLayout) -- opponent's name (JLabel in JPanel) and their cards （JButton in JPanel using Flowlayout)
-	 * South panel (GridBagLayout) -- announcement (JTextField) and my cards (JPanel FlowLayout)
-	 * Center (GridLayout） -- the last card and card stack to draw from (JButtons)
-	 * 
-	 */
-	private static final long serialVersionUID = -7025809731986875797L;
 
+	private static final long serialVersionUID = -7025809731986875797L;
+	  /**
+     * Constructor for initializing the GameZoneUI.
+     */
 	GameZoneUI(){
 		this.setBackground(new Color(206, 237, 206));
 		this.setLayout(new BorderLayout());
@@ -53,20 +52,12 @@ public class GameZoneUI extends JPanel {
 			player.add(name);
 			cardsPanel[i].setLayout(new FlowLayout(FlowLayout.CENTER, 0, 45)); 
 			cardsPanel[i].setBackground(new Color(206, 237, 206));
-			for(int j = 0; j < 11; j++) { // the cards at bottom
-				ImageIcon lback = new ImageIcon(getClass().getResource("Assets/lback.png"));
-				JButton cardBehind = new JButton(lback);
-				cardBehind.setPreferredSize(new Dimension(14,96));
-				cardBehind.setBorderPainted(false); // to hide border of the button
-				cardsPanel[i].add(cardBehind);
+			for(int j = 0; j < 11; j++) { 
+				cardsPanel[i].add(createCardButton("lback.png"));
 			}
 			
 			// the card on the top
-			ImageIcon back = new ImageIcon(getClass().getResource("Assets/back.png"));
-			JButton cardTop = new JButton(back);
-			cardTop.setPreferredSize(new Dimension(71,96));
-			cardTop.setBorderPainted(false);
-			cardsPanel[i].add(cardTop);
+			cardsPanel[i].add(createCardButton("back.png"));
 			
 			panels[i].add(player);
 			panels[i].add(cardsPanel[i]);
@@ -80,19 +71,16 @@ public class GameZoneUI extends JPanel {
 		center.setBackground(new Color(206, 237, 206));
 		
 		// JButton to contain the last card
-		ImageIcon currentCard = new ImageIcon(getClass().getResource("Assets/Qc.png"));
-		JButton currentCardButton = new JButton(currentCard);
-		currentCardButton.setBorderPainted(false);
+		JButton currentCardButton = createCardButton("Qc.png");
 		currentCardButton.setContentAreaFilled(false);
-		currentCardButton.setPreferredSize(new Dimension(71,96));
 		center.add(currentCardButton);
 
 		// another JButton to contain card stack
-		ImageIcon cardStack = new ImageIcon(getClass().getResource("Assets/back.png"));
-		JButton stackButton = new JButton(cardStack);
+		ImageIcon stack = new ImageIcon(getClass().getResource("Assets/cardstack.png"));
+		JButton stackButton = new JButton(stack);
 		stackButton.setBorderPainted(false);
-		stackButton.setContentAreaFilled(false);
-		stackButton.setPreferredSize(new Dimension(71,96));
+		stackButton.setBackground(new Color(206, 237, 206));
+		
 		center.add(stackButton);
 		this.add(center, BorderLayout.CENTER);
 		
@@ -102,17 +90,13 @@ public class GameZoneUI extends JPanel {
 		south.setLayout(new GridLayout(2,1)); // one for announcements, one for cards
 		
 		JPanel announcement = new JPanel();
-		announcement.setLayout(new GridBagLayout());
-		GridBagConstraints gbc = new GridBagConstraints();
+		announcement.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
+	
 		String message = "It's your turn!";
 		JTextField content = new JTextField("System: " + message, 40);
 		content.setFont(new Font("SansSerif", Font.PLAIN, 18));
 		content.setBackground(Color.LIGHT_GRAY);
 		content.setEditable(false);
-		gbc.gridx = 0;
-		gbc.gridy = 0;
-		gbc.insets = new Insets(5,5,5,5);
-		gbc.anchor = GridBagConstraints.WEST;
 		
 		announcement.setBackground(new Color(206, 237, 206));
 		announcement.add(content);
@@ -120,20 +104,12 @@ public class GameZoneUI extends JPanel {
 		JPanel myHand = new JPanel();
 		myHand.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));  // remove gaps between buttons
 		myHand.setBackground(new Color(206, 237, 206));
-		String[] myCards = {"Assets/l6s.png","Assets/l9h.png","Assets/lKh.png","Assets/l5s.png","Assets/l1h.png","Assets/l6h.png"};
-		for(String card:myCards) {
-			ImageIcon myCard = new ImageIcon(getClass().getResource(card));
-			JButton myCardButton = new JButton(myCard);
-			myCardButton.setBorderPainted(false);
-			myCardButton.setPreferredSize(new Dimension(14,96));
-			myHand.add(myCardButton);
+	
+		String[] myCards = {"l6s.png", "l9h.png", "lKh.png", "l5s.png", "l1h.png", "l6d.png", "lKs.png", "l7h.png", "l6c.png", "l1s.png", "l9s.png", "8c.png"};
+		for (int i = 0; i < myCards.length; i++ ) {
+			JButton cardButton = createCardButton(myCards[i]);
+		    myHand.add(cardButton);
 		}
-		
-		ImageIcon myCardTop = new ImageIcon(getClass().getResource("Assets/8c.png"));
-		JButton topCardButton = new JButton(myCardTop);
-		topCardButton.setBorderPainted(false);
-		topCardButton.setPreferredSize(new Dimension(71,96));
-		myHand.add(topCardButton);
 		
 		
 		south.add(announcement);
@@ -142,6 +118,20 @@ public class GameZoneUI extends JPanel {
 		this.add(south, BorderLayout.SOUTH);
 		
 		
+	}
+	
+	JButton createCardButton(String cardFileName) {
+	    ImageIcon myCard = new ImageIcon(getClass().getClassLoader().getResource("Assets/" + cardFileName));
+	    JButton myCardButton = new JButton(myCard);
+	    myCardButton.setBorderPainted(false);
+	    if (cardFileName.charAt(0)!= 'l') {
+		    myCardButton.setPreferredSize(new Dimension(71, 96));
+
+	    } else {
+		    myCardButton.setPreferredSize(new Dimension(14, 96));
+
+	    }
+	    return myCardButton;
 	}
 	
 }

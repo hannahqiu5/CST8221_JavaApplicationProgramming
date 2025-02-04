@@ -1,25 +1,25 @@
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+/**
+ * Menu interface for user to interact with.
+ * 
+ * Game
+ *	|_ Start Game 
+ *  |_ Mode -- 2-, 3-, 4-Player Game
+ *  |_ Quit Game
+ * Network
+ *  |_ ***TBD*** 
+ * Settings
+ *  |_ Language -- En, Ch
+ * About
+ *  |_ About the game
+ *  
+ */
 
 public class MenuBarUI extends JMenuBar {
 
-	/**
-	 * Menu interface for user to interact with.
-	 * 
-	 * Game
-	 *	|_ Start Game 
-	 *  |_ Mode -- 2-, 3-, 4-Player Game
-	 *  |_ Quit Game
-	 * Network
-	 *  |_ ***TBD*** 
-	 * Settings
-	 *  |_ Language -- En, Ch
-	 * About
-	 *  |_ About the game
-	 *  
-	 */
-	
+
 	private static final long serialVersionUID = 2347000320348280562L;
 
 	MenuBarUI() {

@@ -6,15 +6,15 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-
+/**
+ * The chat area (JPanel with vertical BoxLayout)
+ * contains two sections (JPanels) -- one to display chat history 
+ * (JTextArea and JScrollPane) and the other to let user edit 
+ * (JTextArea) and send (JButton) their message. 
+ * 
+ */
 public class ChatUI extends JPanel{
-	/**
-	 * The chat area (JPanel with vertical BoxLayout)
-	 * contains two sections (JPanels) -- one to display chat history 
-	 * (JTextArea and JScrollPane) and the other to let user edit 
-	 * (JTextArea) and send (JButton) their message. 
-	 * 
-	 */
+
 	private static final long serialVersionUID = -3304986041555324967L;
 
 	ChatUI(){
