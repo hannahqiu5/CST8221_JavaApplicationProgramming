@@ -45,7 +45,11 @@ ECHO "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
 ECHO "1. Compiling ......................"
 javac -d %BINDIR% %SRCDIR%\*.java 2>%BINERR%
 
-
+(
+  ECHO Manifest-Version: 1.0
+  ECHO Main-Class: %MAINCLASSBIN%
+  ECHO Created-By: %USERNAME%
+) > MANIFEST.MF
 
 ECHO "2. Creating Jar ..................."
 jar cvfm %BINDIR%\%JARNAME% MANIFEST.MF -C %BINDIR% . >%JAROUT% 2>%JARERR%
@@ -63,4 +67,4 @@ ECHO "                                   "
 @echo on
 :: ---------------------------------------------------------------------
 :: End of Script (Labs - F24)
-:: ---------------------------------------------------------------------
+:: ------------------------------------------------------------------

@@ -10,7 +10,8 @@ import javax.swing.JPanel;
  */
 public class UI {
 	/**
-	 * display the UI
+	 * display() creates a JFrame object and puts all the game components
+	 * in specific positions using BorderLayout
 	 */
 	public void display() {
 		JFrame frame = new JFrame("Crazy Eights");
@@ -44,8 +45,6 @@ public class UI {
 	/** 
 	 * default constructor 
 	 */
-	
-	
 	public UI() {}
 
 }

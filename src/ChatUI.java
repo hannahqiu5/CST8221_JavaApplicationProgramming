@@ -7,10 +7,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 /**
- * The chat area (JPanel with vertical BoxLayout)
- * contains two sections (JPanels) -- one to display chat history 
- * (JTextArea and JScrollPane) and the other to let user edit 
- * (JTextArea) and send (JButton) their message. 
+ * Chat UI contains two sections -- one to display chat history 
+ * and the other to let user edit and send their messages. 
  * 
  */
 public class ChatUI extends JPanel{
@@ -19,18 +17,18 @@ public class ChatUI extends JPanel{
 
 	ChatUI(){
 		// top section -- for displaying chat history
-		JTextArea chatHistory = new JTextArea("", 20, 20); // to contain messages
+		JTextArea chatHistory = new JTextArea("", 21,20); // to contain all the messages
 		chatHistory.setEditable(false);
-		JScrollPane topSection = new JScrollPane(chatHistory); // to contain JTextArea
+		JScrollPane topSection = new JScrollPane(chatHistory); // to contain the JTextArea above
 		chatHistory.setBackground(new Color(255, 185, 140 ));
 		
 		
 		// bottom section -- for editting and sending message
-		JTextArea inputBox = new JTextArea("Type here ...", 2, 25); // for input
-		JButton sendButton = new JButton("Send"); // click the button to send
 		JPanel bottomSection = new JPanel();
+		JTextArea inputBox = new JTextArea("Type here ...", 2, 25); // input area
+		JButton sendButton = new JButton("Send"); // the "Send" button
 		
-		bottomSection.add(inputBox);
+		bottomSection.add(inputBox); // adding the two sections to the bottom panel
 		bottomSection.add(sendButton);
 		
 		this.setLayout(new BoxLayout(this,BoxLayout.Y_AXIS)); 

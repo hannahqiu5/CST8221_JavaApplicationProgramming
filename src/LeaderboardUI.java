@@ -8,17 +8,15 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 /**
- * To show player's ranks and their current scores.
- * (JLabels inside JPanel using GridLayout)
+ * To show names, ranks and scores of the players.
  */
 public class LeaderboardUI extends JPanel {
 
-
-
 	private static final long serialVersionUID = 305378614847137360L;
-
+	/**
+	 * Initializes the LeaderboardUI panel with player rankings and scores.
+	 */
 	LeaderboardUI() {
-		//this.setPreferredSize(new Dimension(360, 360));
 		this.setBackground(new Color(181, 200, 255));
 		this.setLayout(new GridLayout(5,3)); 
 		
@@ -33,7 +31,7 @@ public class LeaderboardUI extends JPanel {
 		
 		
 		String[] medals = {"first.png", "second.png", "third.png","fourth.png"};
-		String[] names = {"player 2", "you", "player 1", "player 3"}; // substitute with players' names
+		String[] names = {"player 2", "you", "player 1", "player 3"}; // name strings
 		String[] scores = {"4", "2", "1", "0"};
 		for(int i = 0; i < 4; i++) {
 			ImageIcon image = new ImageIcon(getClass().getResource("Assets/" + medals[i]));
@@ -52,5 +50,4 @@ public class LeaderboardUI extends JPanel {
 		}
 
 	}
-
 }

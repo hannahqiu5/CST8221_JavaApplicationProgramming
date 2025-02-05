@@ -1,7 +1,10 @@
-
 /**
- * Contains main
+ * Main entry point for the CrazyEights application.
+ * This class initializes and runs the UI
+ * @author Han Qiu
+ * @version 1.001
  */
+
 public class Main {
 	/**
 	 * main for running the application.

@@ -12,58 +12,34 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 /**
- * The area (JPanel with BorderLayout) is to play cards and receive announcements.
- * East, North and West panel (BoxLayout) -- opponent's name (JLabel in JPanel) and their cards （JButton in JPanel using Flowlayout)
- * South panel (GridLayout) -- announcement (JTextField in JPanel using FlowLayout) and my cards (JButtons in JPanel using FlowLayout)
- * Center (GridLayout） -- the last card and card stack to draw from (JButtons)
- * 
+ * GameZoneUI is where the players play their cards and see announcements.
+ * East, north and west panels are for opponents. 
+ * South panel has upper section to display announcements and lower section shows my cards.
+ * Central panel has left and right sections, displaying the current card and the stack of 
+ * cards, respectively. 
  */
 public class GameZoneUI extends JPanel {
 
 	private static final long serialVersionUID = -7025809731986875797L;
 	  /**
-     * Constructor for initializing the GameZoneUI.
-     */
+      * Constructor for initializing the GameZoneUI.
+      * It adds panels for player cards, announcements, and the central game zone.
+      */
 	GameZoneUI(){
 		this.setBackground(new Color(206, 237, 206));
 		this.setLayout(new BorderLayout());
 		
-		// ***panels for opponents' cards***
-		JPanel west = new JPanel();
-		JPanel north = new JPanel();
-		JPanel east = new JPanel();
-		JPanel cardsWest= new JPanel();
-		JPanel cardsNorth = new JPanel();
-		JPanel cardsEast = new JPanel();
-		JPanel[] cardsPanel = {cardsWest, cardsNorth , cardsEast};
-		JPanel[] panels = {west, north , east}; 
-		String[] layout = {BorderLayout.WEST, BorderLayout.NORTH, BorderLayout.EAST};
-		String[] playerName = {"player 1", "player 2", "player 3"}; // to store player's names
 		
 		
-		for(int i = 0; i <3; i++) { 
-			panels[i].setBackground(new Color(206, 237, 206));
-			panels[i].setLayout(new BoxLayout(panels[i],BoxLayout.Y_AXIS));
-			
-			JPanel player = new JPanel();
-			player.setBackground(new Color(206, 237, 206));
-			JLabel name = new JLabel(playerName[i]);
-			name.setFont(new Font("SansSerif", Font.PLAIN, 18));
-			player.add(name);
-			cardsPanel[i].setLayout(new FlowLayout(FlowLayout.CENTER, 0, 45)); 
-			cardsPanel[i].setBackground(new Color(206, 237, 206));
-			for(int j = 0; j < 11; j++) { 
-				cardsPanel[i].add(createCardButton("lback.png"));
-			}
-			
-			// the card on the top
-			cardsPanel[i].add(createCardButton("back.png"));
-			
-			panels[i].add(player);
-			panels[i].add(cardsPanel[i]);
-			
-			this.add(panels[i], layout[i]);
-		} 
+		// panels to show opponents' hands
+		JPanel west = createOpponentPanel("west", "player 1", 12);
+		JPanel north = createOpponentPanel("north", "player 2", 12);
+		JPanel east = createOpponentPanel("east", "player 3", 12);
+
+		this.add(east, BorderLayout.EAST);
+		this.add(north, BorderLayout.NORTH);
+		this.add(west, BorderLayout.WEST);
+		
 
 		// center panel to show the last card being played and card stack
 		JPanel center = new JPanel();
@@ -80,14 +56,13 @@ public class GameZoneUI extends JPanel {
 		JButton stackButton = new JButton(stack);
 		stackButton.setBorderPainted(false);
 		stackButton.setBackground(new Color(206, 237, 206));
-		
 		center.add(stackButton);
+		
 		this.add(center, BorderLayout.CENTER);
 		
-		
-		// *** south panel for my cards ***
+		// *** south panel for displaying my cards ***
 		JPanel south = new JPanel();
-		south.setLayout(new GridLayout(2,1)); // one for announcements, one for cards
+		south.setLayout(new GridLayout(2,1)); // one to contain announcements, one for cards
 		
 		JPanel announcement = new JPanel();
 		announcement.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
@@ -120,16 +95,66 @@ public class GameZoneUI extends JPanel {
 		
 	}
 	
+	
+	/**
+	 * createOpponentPanel creates panels for opponents.
+	 * The layout varies based on the opponent's position on the game board.
+	 * @param dir A String specifying the opponent's direction ("north", "west", or "east").
+	 * @param playerName  A String containing the opponent's name
+	 * @param numOfCards An integer storing the number of cards the opponent has.
+	 * @return JPanel containing opponents' names and cards
+	 */
+		public JPanel createOpponentPanel(String dir, String playerName, int numOfCards) {
+		JPanel mainPanel = new JPanel();
+		JPanel cardPanel = new JPanel();
+		mainPanel.setBackground(new Color(206, 237, 206));
+		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+		cardPanel.setBackground(new Color(206, 237, 206));
+		JLabel nameLabel = new JLabel(playerName);
+		nameLabel.setFont(new Font("SansSerif", Font.PLAIN, 18));
+		switch (dir) {
+		case "north":
+			cardPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 45)); 
+			for(int i = 0; i < numOfCards - 1; i++) { 
+				cardPanel.add(createCardButton("lback.png"));
+			}
+			break;
+		case "west":
+			cardPanel.setLayout(new BoxLayout(cardPanel, BoxLayout.Y_AXIS)); 
+			for(int i = 0; i < numOfCards - 1; i++) { 
+				cardPanel.add(createCardButton("tback.png"));
+			}
+			break;
+		case "east":
+			cardPanel.setLayout(new BoxLayout(cardPanel, BoxLayout.Y_AXIS)); 
+			for(int i = 0; i < numOfCards - 1; i++) { 
+				cardPanel.add(createCardButton("tback.png"));
+			}
+			break;
+		}
+		cardPanel.add(createCardButton("back.png"));
+		mainPanel.add(nameLabel);
+		mainPanel.add(cardPanel);	
+		
+		return mainPanel;
+	}
+	
+	/**
+	 * createCardButton creates an ImageIcon then add it to a JButton.
+	 * The conditional statement decides what size the png should have.
+	 * @param cardFileName a string that contains relative path to the target png
+	 * @return JButton containing desired png
+	 */
 	JButton createCardButton(String cardFileName) {
 	    ImageIcon myCard = new ImageIcon(getClass().getClassLoader().getResource("Assets/" + cardFileName));
 	    JButton myCardButton = new JButton(myCard);
 	    myCardButton.setBorderPainted(false);
-	    if (cardFileName.charAt(0)!= 'l') {
-		    myCardButton.setPreferredSize(new Dimension(71, 96));
-
-	    } else {
+	    if (cardFileName.charAt(0) == 'l') {
 		    myCardButton.setPreferredSize(new Dimension(14, 96));
-
+	    } else if (cardFileName.charAt(0) == 't') {
+		    myCardButton.setPreferredSize(new Dimension(71, 14));
+	    } else { // set to full size
+		    myCardButton.setPreferredSize(new Dimension(71, 96));
 	    }
 	    return myCardButton;
 	}

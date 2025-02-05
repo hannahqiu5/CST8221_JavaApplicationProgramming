@@ -3,7 +3,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 /**
  * Menu interface for user to interact with.
- * 
+ * Structure:
  * Game
  *	|_ Start Game 
  *  |_ Mode -- 2-, 3-, 4-Player Game
