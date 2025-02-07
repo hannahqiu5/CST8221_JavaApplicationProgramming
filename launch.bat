@@ -1,9 +1,9 @@
 @echo off
 :: ---------------------------------------------------------------------
 :: JAP COURSE - SCRIPT
-:: SCRIPT CST8221 - Fall 2024
+:: SCRIPT CST8221 - Winter 2025
 :: ---------------------------------------------------------------------
-:: Begin of Script (Labs - F24)
+:: Begin of Script (Labs - W25)
 :: ---------------------------------------------------------------------
 CLS
 :: LOCAL VARIABLES ....................................................
@@ -23,7 +23,7 @@ ECHO "@                                                                   @"
 ECHO "@                   #       @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@  @"
 ECHO "@                  ##       @  A L G O N Q U I N  C O L L E G E  @  @"
 ECHO "@                ##  #      @    JAVA APPLICATION PROGRAMMING    @  @"
-ECHO "@             ###    ##     @         F A L L  -  2 0 2 3        @  @"
+ECHO "@             ###    ##     @     W I N T E R  -  2 0 2 5        @  @"
 ECHO "@          ###    ##        @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@  @"
 ECHO "@        ###    ##                                                  @"
 ECHO "@        ##    ###                 ###                              @"
@@ -43,25 +43,19 @@ ECHO "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
 
 
 ECHO "1. Compiling ......................"
-javac -d %BINDIR% %SRCDIR%\*.java 2>%BINERR%
-
-(
-  ECHO Manifest-Version: 1.0
-  ECHO Main-Class: %MAINCLASSBIN%
-  ECHO Created-By: %USERNAME%
-) > MANIFEST.MF
+javac -Xlint -d %BINDIR% %SRCDIR%\*.java 2> %BINERR%
 
 ECHO "2. Creating Jar ..................."
-jar cvfm %BINDIR%\%JARNAME% MANIFEST.MF -C %BINDIR% . >%JAROUT% 2>%JARERR%
-
+cd bin
+jar cvfe %JARNAME% %MAINCLASSBIN% . > ../%JAROUT% 2> ../%JARERR%
 
 ECHO "3. Creating Javadoc ..............."
-javadoc -d %DOCDIR% %MAINCLASSSRC% 2>%DOCERR%
-
-
+cd ..
+javadoc -d %DOCDIR% %SRCDIR%\*.java 2> %DOCERR%
 
 ECHO "4. Running Jar ...................."
-java -jar %BINDIR%\%JARNAME%
+cd bin
+start java -jar %JARNAME%
 ECHO "[END OF SCRIPT -------------------]"
 ECHO "                                   "
 @echo on
