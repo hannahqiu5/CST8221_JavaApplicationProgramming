@@ -15,8 +15,8 @@ SET JAROUT=jar.out
 SET JARERR=jar.err
 SET DOCDIR=doc
 SET DOCERR=javadoc.err
-SET MAINCLASSSRC=src/Main.java
-SET MAINCLASSBIN=Main
+SET MAINCLASSSRC=src\com\game\controller\Controller.class
+SET MAINCLASSBIN=com.game.controller.Controller
 
 ECHO "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
 ECHO "@                                                                   @"
@@ -41,9 +41,8 @@ ECHO "@         ((((((((((((((((()                                        @"
 ECHO "@                                                                   @"
 ECHO "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
 
-
 ECHO "1. Compiling ......................"
-javac -Xlint -d %BINDIR% %SRCDIR%\*.java 2> %BINERR%
+javac -Xlint -d %BINDIR% %SRCDIR%\com\game\controller\*.java %SRCDIR%\com\game\model\*.java %SRCDIR%\com\game\ui\*.java 2> %BINERR%
 
 ECHO "2. Creating Jar ..................."
 cd bin
@@ -51,7 +50,7 @@ jar cvfe %JARNAME% %MAINCLASSBIN% . > ../%JAROUT% 2> ../%JARERR%
 
 ECHO "3. Creating Javadoc ..............."
 cd ..
-javadoc -d %DOCDIR% %SRCDIR%\*.java 2> %DOCERR%
+javadoc -d %DOCDIR% %SRCDIR%\com\game\controller\*.java %SRCDIR%\com\game\model\*.java %SRCDIR%\com\game\ui\*.java 2> %DOCERR%
 
 ECHO "4. Running Jar ...................."
 cd bin
@@ -61,4 +60,4 @@ ECHO "                                   "
 @echo on
 :: ---------------------------------------------------------------------
 :: End of Script (Labs - F24)
-:: ------------------------------------------------------------------
+:: ---------------------------------------------------------------------
