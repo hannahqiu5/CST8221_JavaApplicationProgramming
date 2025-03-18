@@ -122,6 +122,12 @@ public class UI {
 		menu.getLang().setText(controller.getMessage("lang"));
 		menu.getEn().setText(controller.getMessage("eng"));
 		menu.getCh().setText(controller.getMessage("ch"));
+		menu.getStartGame().setText(controller.getMessage("start"));
+		menu.getGameMode().setText(controller.getMessage("mode"));
+		menu.getTwo().setText(controller.getMessage("nplayer", "2"));
+		menu.getThree().setText(controller.getMessage("nplayer", "3"));
+		menu.getFour().setText(controller.getMessage("nplayer", "4"));
+		menu.getEndGame().setText(controller.getMessage("quit"));
 
 		lead.updateLeaderboard(controller.getGameModel().players);
 

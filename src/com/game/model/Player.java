@@ -8,6 +8,7 @@ import java.util.List;
  * Represents a player in the game
  * @author Han Qiu [Student id 041135330]
  * @version 1.0
+
  * @since 1.8
  */
 public class Player {
@@ -75,7 +76,7 @@ public class Player {
 		} else {
 			game.setSystemMsg("getScore");
 			this.updateScore(1);
-			game.controller.getGameView().updateUI();
+			game.controller.getGameView().getLead().updateLeaderboard(game.players);
 		}
 	}
 
@@ -86,7 +87,8 @@ public class Player {
 	 */
 	public Card cpuCardHandler() {
 		for (Card c : hand) {
-			if (c.getSuit().equals(Game.currentCard.getSuit()) || c.getRank().equals(Game.currentCard.getRank())
+			if (c.getSuit().equals(Game.currentCard.getSuit()) 
+					|| c.getRank().equals(Game.currentCard.getRank())
 					|| c.getRank().equals("8")) {
 
 				System.out.println(name + " played " + c.toString());
@@ -99,10 +101,11 @@ public class Player {
 	/**
 	 * Updates the player's score.
 	 *
-	 * @param mark The points to add
+	 * @param pts The points to add
 	 */
 	public void updateScore(int pts) {
 		this.score += pts;
+		
 	}
 
 	// getters and setters

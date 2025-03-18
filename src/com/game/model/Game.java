@@ -14,6 +14,7 @@ import com.game.controller.Controller;
 /**
  * Represents the core logic and state of the game. Manages players, deck, turn
  * order, penalties, and game flow.
+ *
  * @author Han Qiu [Student id 041135330]
  * @version 1.0
  * @see com.game.controller.Controller
@@ -22,10 +23,19 @@ import com.game.controller.Controller;
 public class Game {
 	Controller controller;
 	private int currentPlayerIndex = 0; // to track player's turn
-	private boolean reversedOrder; // tracks whether the order is reversed (i.e. a Queen is played)
+	private boolean reversedOrder;
 	boolean isGameOver = false;
+	/**
+	 * The current card in play
+	 */
 	public static Card currentCard = null;
+	/**
+	 * The shuffled deck of cards used in the game.
+	 */
 	public static List<Card> deck = new Deck().generateShuffledDeck(); // a shuffled deck of cards
+	/**
+	 * The collection of played cards
+	 */
 	public static List<Card> recycle = new ArrayList<>();
 	public List<Player> players = new ArrayList<>();
 
@@ -47,7 +57,7 @@ public class Game {
 
 	/**
 	 * Initializes a new game instance with the specified number of players.
-	 * 
+	 *
 	 * @param numPlayer - total number of players
 	 */
 	public Game(int numPlayer) {
@@ -79,7 +89,7 @@ public class Game {
 
 	/**
 	 * Switches system language.
-	 * 
+	 *
 	 * @param langCode - en(English) or ch（Simplified Chinese)
 	 */
 	public void setLanguage(String langCode) {
@@ -90,7 +100,6 @@ public class Game {
 			Locale locale = new Locale(langCode);
 			msg = ResourceBundle.getBundle("resources/messages_ch", locale);
 		}
-
 	}
 
 	/**
@@ -106,8 +115,8 @@ public class Game {
 
 	/**
 	 * Resets game state and prepares a new round of game with 2-4 players.
-	 * 
-	 * @param numPlayer - number of players
+	 *
+	 * @param numPlayer - number of players in new game
 	 */
 	public void resetGame(int numPlayer) {
 		for (Player p : players) {
@@ -130,7 +139,10 @@ public class Game {
 		recycle.clear();
 		recycle.add(currentCard);
 
+		cardPenaltyCounter = 0;
 		currentPlayerIndex = 0;
+		currentPlayer = players.get(currentPlayerIndex);
+		setReversed(false);
 
 		controller.getGameView().updateUI();
 		playTurn();
@@ -146,7 +158,7 @@ public class Game {
 
 	/**
 	 * Method to calculate index of next player
-	 * 
+	 *
 	 * @return an index number
 	 */
 	public int getNextPlayerIndex() {
@@ -159,7 +171,7 @@ public class Game {
 	 * Used by human player exclusively. Checks if the input card is playablel. If
 	 * yes, udpate game state and removes the card from their hand. if not, prompts
 	 * them to draw a new card.
-	 * 
+	 *
 	 * @param selectedCard
 	 */
 	public void playCard(Card selectedCard) {
@@ -169,12 +181,12 @@ public class Game {
 				controller.getGameView().updateUI();
 				return;
 			}
-
-			currentPlayer.getHand().remove(selectedCard);
 			setCurrentCard(selectedCard);
-			recycle.add(currentCard);
+			recycle.add(selectedCard);
+			currentPlayer.getHand().remove(selectedCard);
+
 			controller.getGameView().updateUI();
-			specialCardHandler(selectedCard, currentPlayer);
+			specialCardHandler(currentCard, currentPlayer);
 
 		} else { // if no valid card then ask them to draw a new one
 			setSystemMsg("drawCard");
@@ -189,9 +201,7 @@ public class Game {
 	 */
 	public void playTurn() {
 		if (isGameOver) {
-			for (Player player : players) {
-				player.updateScore(player.getHand().size());
-			}
+			setSystemMsg("winner", checkWinner().getName());
 			controller.getGameView().getLead().updateLeaderboard(players);
 			return;
 		}
@@ -204,7 +214,7 @@ public class Game {
 		setCurrentPlayer(players.get(getCurrentPlayerIndex()));
 		System.out.println("Current turn: " + currentPlayer.getName());
 
-		if (currentPlayer != pp) {
+		if (currentPlayer != pp) {//cpu players turn
 			Card cpuCard;
 
 			while (currentPlayer.getHand().size() < 12 && !hasValidMove(currentPlayer)) {
@@ -214,10 +224,22 @@ public class Game {
 
 			cpuCard = currentPlayer.cpuCardHandler();
 			if (cpuCard != null) {
+
 				currentPlayer.getHand().remove(cpuCard);
 				setCurrentCard(cpuCard);
 				recycle.add(currentCard);
-				specialCardHandler(cpuCard, currentPlayer);
+				if (cardPenaltyCounter > 0) {
+					if (cpuCard.getRank().equals("2")) {
+						cardPenaltyCounter += 2;
+					} else {
+						for (int i = 0; i < cardPenaltyCounter; i++) {
+							currentPlayer.drawCard(false);
+						}
+						cardPenaltyCounter = 0;
+					}
+				} else {
+					specialCardHandler(cpuCard, currentPlayer);
+				}
 
 				controller.getGameView().updateUI();
 				System.out.println(currentPlayer.getName() + " hand: " + currentPlayer.getHand());
@@ -229,10 +251,8 @@ public class Game {
 			}
 			TimerTask timerTask = new PlayTurnTask(this);
 			new Timer().schedule(timerTask, 1000);
-			
-			setCurrentPlayerIndex(getNextPlayerIndex());
 
-			
+			setCurrentPlayerIndex(getNextPlayerIndex());
 
 		} else { // human player's turn
 			setSystemMsg("yourTurn");
@@ -246,15 +266,28 @@ public class Game {
 				setSystemMsg("playToContinue");
 				controller.getGameView().updateUI();
 			}
+			if (currentCard != null) {
+			    if (currentCard.getRank().equals("2")) {
+					cardPenaltyCounter += 2;
+				}
+
+				if (cardPenaltyCounter > 0) {
+					for (int i = 0; i < cardPenaltyCounter; i++) {
+						currentPlayer.drawCard(false);
+					}
+					cardPenaltyCounter = 0;
+				}
+			}
 		}
 
 		controller.getGameView().getGameZone().updateUI();
+
 		System.out.println("=============================================");
 	}
 
 	/**
 	 * Handles the scenario when a player does not have a valid card to play.
-	 * 
+	 *
 	 * @param player - a player who needs to draw a new card
 	 */
 	public void handleInvalidMove(Player player) {
@@ -265,34 +298,36 @@ public class Game {
 			controller.getGameView().updateUI();
 		}
 
-		 if (!hasValidMove(player) && player.getHand().size() >= 12) {
-		        setSystemMsg("getScore"); 
-		        controller.getGameView().updateUI();
-		        player.updateScore(1); 
-		        controller.getGameView().getLead().updateLeaderboard(players);
-		    }
+		if (!hasValidMove(player) && player.getHand().size() >= 12) {
+			setSystemMsg("getScore");
+			controller.getGameView().updateUI();
+			player.updateScore(1);
+			controller.getGameView().getLead().updateLeaderboard(players);
+		}
 	}
 
 	/**
 	 * Handles the effect of playing a card with a special rank.
-	 * 
+	 *
 	 * @param card          - a card with special rank
 	 * @param currentPlayer - person that played the card
 	 */
 	public void specialCardHandler(Card card, Player currentPlayer) {
+
 		switch (card.getRank()) {
 		case "2":
-			cardPenaltyCounter += 2;
+			if (!(cardPenaltyCounter > 0)) {
+				cardPenaltyCounter += 2;
+			}
+
 			setSystemMsg("two");
 			controller.getGameView().updateUI();
-
-			handleTwo();
-
 			break;
 		case "4":
 			setSystemMsg("four");
-			controller.getGameView().updateUI();
 			handleDrawFour(currentPlayer);
+			controller.getGameView().updateUI();
+
 			break;
 		case "A":
 			setSystemMsg("ace");
@@ -300,82 +335,66 @@ public class Game {
 			reverseOrderOfPlay();
 			break;
 		case "Q":
-
 			setSystemMsg("queen");
 			setCurrentPlayerIndex(getNextPlayerIndex());
 			controller.getGameView().updateUI();
 			break;
 		case "8":
 			if (currentPlayer == pp) {
-
 				controller.handleChangeSuit();
 			}
 			break;
 		default:
 			String playerMsg;
-			if(currentPlayer == pp) {
+			if (currentPlayer == pp) {
 				playerMsg = getMessage("you");
 			} else {
-				playerMsg = getMessage("player") + " " + currentPlayer.getName().charAt(currentPlayer.getName().length()-1);
-
+				playerMsg = getMessage("player") + " "
+						+ currentPlayer.getName().charAt(currentPlayer.getName().length() - 1);
 			}
-			setSystemMsg("played", playerMsg , currentCard);
+			setSystemMsg("played", playerMsg, currentCard);
 			break;
 		}
-	}
-	
-	private void handleTwo() {
-	    Player nextPlayer = players.get(getNextPlayerIndex());
-
-	    boolean hasTwo = false;
-	    for (Card card : nextPlayer.getHand()) {
-	        if (card.getRank().equals("2")) {
-	            hasTwo = true;
-	            break; 
-	        }
-	    }
-
-	    if (hasTwo) {
-	        System.out.println(nextPlayer.getName() + " can play a 2 to pass on the penalty.");
-	    } else {
-	        System.out.println(nextPlayer.getName() + " must draw " + cardPenaltyCounter + " cards.");
-	        for (int i = 0; i < cardPenaltyCounter; i++) {
-	            nextPlayer.drawCard(true); 
-	        }
-	        cardPenaltyCounter = 0; 
-	    }
-
-	    setCurrentPlayerIndex(getNextPlayerIndex());
 	}
 
 	/**
 	 * Sets a new suit to the game.
-	 * 
+	 *
 	 * @param suit - a String with suit name
 	 */
 	public void changeSuit(String suit) {
+
 		String suitChar = String.valueOf(suit.charAt(0));
 		String convertedSuit = suitChar;
-		if (suitChar.equals("方"))
+		// if system is set to a differenc language, convert suit names into English:
+		if (suitChar.equals("方")) {
 			convertedSuit = "d";
-		if (suitChar.equals("黑"))
+		}
+		if (suitChar.equals("黑")) {
 			convertedSuit = "s";
-		if (suitChar.equals("梅"))
+		}
+		if (suitChar.equals("梅")) {
 			convertedSuit = "c";
-		if (suitChar.equals("红"))
+		}
+		if (suitChar.equals("红")) {
 			convertedSuit = "h";
-		currentCard = new Card(convertedSuit, "8");
-		this.systemMsg = controller.getMessage("suitChangeTo") + suit;
+		}
+		currentCard.setSuit(convertedSuit);
+		String newSuit = getMessage(convertedSuit);
+		setSystemMsg("suitChangeTo", newSuit);
 	}
+
+
 
 	/**
 	 * Assigns the next player 4 cards. If the player cannot take 4 more cards, the
 	 * rest cards go to the current player. If current player does not have enough
 	 * room, they will draw till they have 12 cards and get 1 penalty point.
-	 * 
+	 *
 	 * @param currentPlayer - this player played a rank four
 	 */
 	private void handleDrawFour(Player currentPlayer) {
+
 		int drawCount = 4;
 		Player nextPlayer = players.get(getNextPlayerIndex());
 
@@ -387,7 +406,9 @@ public class Game {
 			}
 			System.out
 					.println(currentPlayer.getName() + " played a 4. " + nextPlayer.getName() + " must draw 4 cards.");
-		} else { // next player cannot take all 4 cards
+
+		}
+		if (availableSpace < drawCount) { // next player cannot take all 4 cards
 			int remainingCards = drawCount - availableSpace;
 			drawCount = availableSpace;
 
@@ -396,24 +417,27 @@ public class Game {
 			}
 
 			// leftover cards go back to caller
-			if (currentPlayer.getHand().size() >= 12) { // if no enough space
-				System.out.println(currentPlayer.getName() + " has 12 cards and will get a penalty point.");
-
-				currentPlayer.updateScore(1); // get 1 penalty score
-				controller.getGameView().getLead().updateLeaderboard(players);
-			} else {
-				for (int i = 0; i < remainingCards; i++) {
-					currentPlayer.drawCard(true);
+			if (remainingCards > 0) {
+				if (currentPlayer.getHand().size() >= 12) { // If current player has no space
+					System.out.println(currentPlayer.getName() + " has 12 cards and will get a penalty point.");
+					currentPlayer.updateScore(1);
+					controller.getGameView().getLead().updateLeaderboard(players);
+				} else {
+					for (int i = 0; i < remainingCards; i++) {
+						currentPlayer.drawCard(true);
+					}
+					System.out.println(currentPlayer.getName() + " had space and took " + remainingCards + " cards.");
 				}
 			}
 		}
 
 		controller.getGameView().updateUI();
+
 	}
 
 	/**
 	 * Checks if a player holds at least one valid card
-	 * 
+	 *
 	 * @param player Player object
 	 * @return boolean -- true if player can play; otherwise false
 	 */
@@ -428,7 +452,7 @@ public class Game {
 
 	/**
 	 * Appends input to chat history list
-	 * 
+	 *
 	 * @param playerName
 	 * @param message    - String object
 	 */
@@ -439,26 +463,26 @@ public class Game {
 
 	/**
 	 * Checks if there's a winner.
-	 * 
+	 *
 	 * @return player or null value
 	 */
 	public Player checkWinner() {
 		for (Player p : players) {
 			if (p.getHand().isEmpty()) {
 				setSystemMsg("winner", p.getName());
-				
+
 				isGameOver = true;
 
-				  for (Player player : players) {
-		                if (player != p) { 
-		                    int penalty = player.getHand().size(); 
-		                    player.updateScore(penalty);
-		                }
-		            }
+				for (Player player : players) {
+					if (player != p) {
+						int penalty = player.getHand().size();
+						player.updateScore(penalty);
+					}
+				}
 
-		            controller.getGameView().getLead().updateLeaderboard(players);
-
-		            return p;
+				controller.getGameView().getLead().updateLeaderboard(players);
+				controller.getGameView().updateUI();
+				return p;
 			}
 		}
 		return null;
@@ -466,7 +490,7 @@ public class Game {
 
 	/**
 	 * Checks if a card is valid.
-	 * 
+	 *
 	 * @param card
 	 * @return true or false
 	 */
@@ -528,8 +552,8 @@ public class Game {
 		return currentCard;
 	}
 
-	public static void setCurrentCard(Card currentCard) {
-		Game.currentCard = currentCard;
+	public static void setCurrentCard(Card card) {
+		currentCard = card;
 	}
 
 	public Player getCurrentPlayer() {
@@ -589,6 +613,13 @@ public class Game {
 		Game.deck = deck;
 	}
 
+	public List<Player> getDefaultCPUPlayerList() {
+		return defaultCPUPlayerList;
+	}
+
+	public void setDefaultCPUPlayerList(List<Player> defaultCPUPlayerList) {
+		this.defaultCPUPlayerList = defaultCPUPlayerList;
+	}
 }
 
 /**
@@ -606,7 +637,7 @@ class Deck {
 
 	/**
 	 * Using two for loops to generate a deck of shuffled cards.
-	 * 
+	 *
 	 * @return An arraylist containing all 52 cards.
 	 */
 	List<Card> generateShuffledDeck() {

@@ -81,7 +81,7 @@ public class Controller {
 			Game.setCurrentCard(selectedCard);
 			gameModel.setSystemMsg("played", currentPlayer.getName(), selectedCard.toString());
 
-			gameModel.specialCardHandler(selectedCard, currentPlayer);
+			//gameModel.specialCardHandler(selectedCard, currentPlayer);
 			gameView.getGameZone().updateUI();
 
 			if (gameModel.checkWinner() != null) {
@@ -169,6 +169,7 @@ public class Controller {
 			gameModel.resetGame(2);
 			System.out.println("2 player game");
 			gameView.updateUI();
+			gameView.getLead().updateLeaderboard(gameModel.getPlayers());
 		}
 	}
 
@@ -180,7 +181,9 @@ public class Controller {
 		public void actionPerformed(ActionEvent e) {
 			gameModel.resetGame(3);
 			System.out.println("3 player game");
-			gameView.updateUI();
+			gameView.updateUI();			
+			gameView.getLead().updateLeaderboard(gameModel.getPlayers());
+
 		}
 	}
 
@@ -193,6 +196,8 @@ public class Controller {
 			gameModel.resetGame(4);
 			System.out.println("4 player game");
 			gameView.updateUI();
+			gameView.getLead().updateLeaderboard(gameModel.getPlayers());
+
 		}
 	}
 
@@ -202,7 +207,7 @@ public class Controller {
 	public class EngListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			setLanguage("en"); // Corrected language code
+			setLanguage("en"); 
 			gameModel.setLanguage("en");
 			gameView.updateText();
 			gameView.getLead().updateLeaderboard(gameModel.players);
@@ -211,20 +216,23 @@ public class Controller {
 	}
 
 	/**
-	 * Listener for switching the language to Chinese.
+	 * Listener for switching the language
 	 */
 	public class ChListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			setLanguage("ch"); // Corrected language code
+			setLanguage("ch"); 
 			gameModel.setLanguage("ch");
 			gameView.updateText();
 			gameView.getLead().updateLeaderboard(gameModel.players);
 			gameView.updateUI();
 		}
 	}
-
-	public void handleChangeSuit() {
+/**
+ * Handles the suit change when a player plays an 8 card.
+ * 
+ */
+	public void handleChangeSuit() { 
 		String chosenSuit = gameView.getGameZone().showSuitDialog();
 		if (chosenSuit != null) {
 			gameModel.changeSuit(chosenSuit); 
@@ -244,14 +252,14 @@ public class Controller {
 			if (langCode.equals("en")) {
 				Locale locale = new Locale(langCode);
 				msg = ResourceBundle.getBundle("resources.messages_en", locale);
-				System.out.println("Loaded English bundle successfully");
+				System.out.println("Set to English");
 			} else if (langCode.equals("ch")) {
 				Locale locale = new Locale(langCode);
 				msg = ResourceBundle.getBundle("resources.messages_ch", locale);
-				System.out.println("Loaded Chinese bundle successfully");
+				System.out.println("Set to Simplified Chinese");
 			}
 		} catch (Exception e) {
-			System.err.println("Error loading language bundle: " + e.getMessage());
+			System.err.println("Error loading language bundle " + e.getMessage());
 			e.printStackTrace();
 		}
 	}

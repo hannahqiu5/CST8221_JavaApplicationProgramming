@@ -284,8 +284,8 @@ public class GameZoneUI extends JPanel implements ActionListener {
 	public void refreshGameZone() {
 	    this.removeAll(); 
 
-	    for (int i = 0; i < gameController.getGameModel().getNumPlayer() - 1; i++) {
-	        Player cpuPlayer = gameController.getGameModel().getPlayers().get(i + 1);
+	    for (int i = 0; i < gameController.getGameModel().getCpuPlayerList().size(); i++) {
+	        Player cpuPlayer = gameController.getGameModel().getCpuPlayerList().get(i);
 	        JPanel opponentPanel = (cpuPlayer.getHand().size() == 0) 
 	                ? new JPanel() 
 	                : createOpponentPanel(dirList.get(i), 
@@ -324,11 +324,15 @@ public class GameZoneUI extends JPanel implements ActionListener {
 	 * @return the suit selected by the player.
 	 */
 	public String showSuitDialog() {
-		String[] suits = { gameController.getMessage("clubs"), gameController.getMessage("spades"),
-				gameController.getMessage("diamonds"), gameController.getMessage("hearts") };
+		String[] suits = { gameController.getMessage("c"), 
+				gameController.getMessage("s"),
+				gameController.getMessage("d"), 
+				gameController.getMessage("h") };
 
-		JOptionPane optionPane = new JOptionPane(gameController.getMessage("chooseSuit"), JOptionPane.QUESTION_MESSAGE,
-				JOptionPane.OK_CANCEL_OPTION, null, suits, suits[0]);
+		JOptionPane optionPane = new JOptionPane(gameController.getMessage("chooseSuit"), 
+				JOptionPane.QUESTION_MESSAGE,
+				JOptionPane.DEFAULT_OPTION,      
+				null, suits, suits[0]);
 
 		JDialog dialog = optionPane.createDialog(gameController.getMessage("changeSuit"));
 

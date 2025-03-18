@@ -1,19 +1,19 @@
-src\com\game\controller\Controller.java:245: warning: [deprecation] Locale(String) in Locale has been deprecated
+src\com\game\controller\Controller.java:253: warning: [deprecation] Locale(String) in Locale has been deprecated
 				Locale locale = new Locale(langCode);
 				                ^
-src\com\game\controller\Controller.java:249: warning: [deprecation] Locale(String) in Locale has been deprecated
+src\com\game\controller\Controller.java:257: warning: [deprecation] Locale(String) in Locale has been deprecated
 				Locale locale = new Locale(langCode);
 				                ^
 src\com\game\controller\Controller.java:36: warning: [this-escape] possible 'this' escape before subclass is fully initialized
 		setLanguage("en");
 		           ^
-src\com\game\model\Game.java:87: warning: [deprecation] Locale(String) in Locale has been deprecated
+src\com\game\model\Game.java:97: warning: [deprecation] Locale(String) in Locale has been deprecated
 			Locale locale = new Locale(langCode);
 			                ^
-src\com\game\model\Game.java:90: warning: [deprecation] Locale(String) in Locale has been deprecated
+src\com\game\model\Game.java:100: warning: [deprecation] Locale(String) in Locale has been deprecated
 			Locale locale = new Locale(langCode);
 			                ^
-src\com\game\model\Game.java:55: warning: [this-escape] possible 'this' escape before subclass is fully initialized
+src\com\game\model\Game.java:65: warning: [this-escape] possible 'this' escape before subclass is fully initialized
 		setLanguage("en");
 		           ^
 src\com\game\ui\MenuBarUI.java:22: warning: [serial] non-transient instance field of a serializable class declared with a non-serializable type
@@ -37,10 +37,10 @@ src\com\game\ui\GameZoneUI.java:60: warning: [serial] non-transient instance fie
 src\com\game\ui\GameZoneUI.java:71: warning: [this-escape] possible 'this' escape before subclass is fully initialized
 		this.setBackground(new Color(206, 237, 206));
 		                  ^
-src\com\game\ui\LeaderboardUI.java:25: warning: [serial] non-transient instance field of a serializable class declared with a non-serializable type
+src\com\game\ui\LeaderboardUI.java:26: warning: [serial] non-transient instance field of a serializable class declared with a non-serializable type
 	Controller controller;
 	           ^
-src\com\game\ui\LeaderboardUI.java:26: warning: [serial] non-transient instance field of a serializable class declared with a non-serializable type
+src\com\game\ui\LeaderboardUI.java:27: warning: [serial] non-transient instance field of a serializable class declared with a non-serializable type
 	List<Player> playerList;
 	             ^
 src\com\game\ui\ChatUI.java:30: warning: [serial] non-transient instance field of a serializable class declared with a non-serializable type

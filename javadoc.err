@@ -70,29 +70,26 @@ Generating doc\com\game\controller\Controller.html...
 src\com\game\controller\Controller.java:42: warning: no description for @param
 	 * @param args
 	   ^
-src\com\game\controller\Controller.java:268: warning: no comment
+src\com\game\controller\Controller.java:276: warning: no comment
 	public Game getGameModel() {
 	            ^
-src\com\game\controller\Controller.java:260: warning: no comment
+src\com\game\controller\Controller.java:268: warning: no comment
 	public UI getGameView() {
 	          ^
-src\com\game\controller\Controller.java:276: warning: no comment
+src\com\game\controller\Controller.java:284: warning: no comment
 	public String getMessage(String key) {
 	              ^
-src\com\game\controller\Controller.java:280: warning: no comment
+src\com\game\controller\Controller.java:288: warning: no comment
 	public String getMessage(String key, Object... args) {
 	              ^
-src\com\game\controller\Controller.java:227: warning: no comment
-	public void handleChangeSuit() {
-	            ^
-src\com\game\controller\Controller.java:272: warning: no comment
+src\com\game\controller\Controller.java:280: warning: no comment
 	public void setGameModel(Game gameModel) {
 	            ^
-src\com\game\controller\Controller.java:264: warning: no comment
+src\com\game\controller\Controller.java:272: warning: no comment
 	public void setGameView(UI gameView) {
 	            ^
 Generating doc\com\game\controller\Controller.ChListener.html...
-src\com\game\controller\Controller.java:216: warning: use of default constructor, which does not provide a comment
+src\com\game\controller\Controller.java:221: warning: use of default constructor, which does not provide a comment
 	public class ChListener implements ActionListener {
 	       ^
 Generating doc\com\game\controller\Controller.EndGameListener.html...
@@ -100,11 +97,11 @@ src\com\game\controller\Controller.java:151: warning: use of default constructor
 	public class EndGameListener implements ActionListener {
 	       ^
 Generating doc\com\game\controller\Controller.EngListener.html...
-src\com\game\controller\Controller.java:202: warning: use of default constructor, which does not provide a comment
+src\com\game\controller\Controller.java:207: warning: use of default constructor, which does not provide a comment
 	public class EngListener implements ActionListener {
 	       ^
 Generating doc\com\game\controller\Controller.FourListener.html...
-src\com\game\controller\Controller.java:190: warning: use of default constructor, which does not provide a comment
+src\com\game\controller\Controller.java:193: warning: use of default constructor, which does not provide a comment
 	public class FourListener implements ActionListener {
 	       ^
 Generating doc\com\game\controller\Controller.StartGameListener.html...
@@ -112,7 +109,7 @@ src\com\game\controller\Controller.java:140: warning: use of default constructor
 	public class StartGameListener implements ActionListener {
 	       ^
 Generating doc\com\game\controller\Controller.ThreeListener.html...
-src\com\game\controller\Controller.java:178: warning: use of default constructor, which does not provide a comment
+src\com\game\controller\Controller.java:179: warning: use of default constructor, which does not provide a comment
 	public class ThreeListener implements ActionListener {
 	       ^
 Generating doc\com\game\controller\Controller.TwoListener.html...
@@ -120,135 +117,132 @@ src\com\game\controller\Controller.java:166: warning: use of default constructor
 	public class TwoListener implements ActionListener {
 	       ^
 Generating doc\com\game\model\Game.html...
-src\com\game\model\Game.java:163: warning: no description for @param
+src\com\game\model\Game.java:175: warning: no description for @param
 	 * @param selectedCard
 	   ^
-src\com\game\model\Game.java:432: warning: no description for @param
+src\com\game\model\Game.java:456: warning: no description for @param
 	 * @param playerName
 	   ^
-src\com\game\model\Game.java:470: warning: no description for @param
+src\com\game\model\Game.java:494: warning: no description for @param
 	 * @param card
 	   ^
-src\com\game\model\Game.java:27: warning: no comment
-	public static Card currentCard = null;
-	                   ^
-src\com\game\model\Game.java:41: warning: no comment
+src\com\game\model\Game.java:51: warning: no comment
 	public Player currentPlayer;
 	              ^
-src\com\game\model\Game.java:28: warning: no comment
-	public static List<Card> deck = new Deck().generateShuffledDeck(); // a shuffled deck of cards
-	                         ^
-src\com\game\model\Game.java:30: warning: no comment
+src\com\game\model\Game.java:40: warning: no comment
 	public List<Player> players = new ArrayList<>();
 	                    ^
-src\com\game\model\Game.java:29: warning: no comment
-	public static List<Card> recycle = new ArrayList<>();
-	                         ^
-src\com\game\model\Game.java:495: warning: no comment
+src\com\game\model\Game.java:519: warning: no comment
 	public int getCardPenaltyCounter() {
 	           ^
-src\com\game\model\Game.java:503: warning: no comment
+src\com\game\model\Game.java:527: warning: no comment
 	public Controller getController() {
 	                  ^
-src\com\game\model\Game.java:487: warning: no comment
+src\com\game\model\Game.java:511: warning: no comment
 	public List<Player> getCpuPlayerList() {
 	                    ^
-src\com\game\model\Game.java:527: warning: no comment
+src\com\game\model\Game.java:551: warning: no comment
 	public static Card getCurrentCard() {
 	                   ^
-src\com\game\model\Game.java:535: warning: no comment
+src\com\game\model\Game.java:559: warning: no comment
 	public Player getCurrentPlayer() {
 	              ^
-src\com\game\model\Game.java:568: warning: no comment
+src\com\game\model\Game.java:592: warning: no comment
 	public int getCurrentPlayerIndex() {
 	           ^
-src\com\game\model\Game.java:584: warning: no comment
+src\com\game\model\Game.java:608: warning: no comment
 	public static List<Card> getDeck() {
 	                         ^
-src\com\game\model\Game.java:560: warning: no comment
+src\com\game\model\Game.java:616: warning: no comment
+	public List<Player> getDefaultCPUPlayerList() {
+	                    ^
+src\com\game\model\Game.java:584: warning: no comment
 	public String getMessage(String key) {
 	              ^
-src\com\game\model\Game.java:564: warning: no comment
+src\com\game\model\Game.java:588: warning: no comment
 	public String getMessage(String key, Object... args) {
 	              ^
-src\com\game\model\Game.java:543: warning: no comment
+src\com\game\model\Game.java:567: warning: no comment
 	public int getNumPlayer() {
 	           ^
-src\com\game\model\Game.java:511: warning: no comment
+src\com\game\model\Game.java:535: warning: no comment
 	public List<Player> getPlayers() {
 	                    ^
-src\com\game\model\Game.java:519: warning: no comment
+src\com\game\model\Game.java:543: warning: no comment
 	public Player getPp() {
 	              ^
-src\com\game\model\Game.java:551: warning: no comment
+src\com\game\model\Game.java:575: warning: no comment
 	public String getSystemMsg() {
 	              ^
-src\com\game\model\Game.java:479: warning: no comment
+src\com\game\model\Game.java:503: warning: no comment
 	public boolean isGameOver() {
 	               ^
-src\com\game\model\Game.java:576: warning: no comment
+src\com\game\model\Game.java:600: warning: no comment
 	public boolean isReversed() {
 	               ^
-src\com\game\model\Game.java:499: warning: no comment
+src\com\game\model\Game.java:523: warning: no comment
 	public void setCardPenaltyCounter(int cardPenaltyCounter) {
 	            ^
-src\com\game\model\Game.java:507: warning: no comment
+src\com\game\model\Game.java:531: warning: no comment
 	public void setController(Controller controller) {
 	            ^
-src\com\game\model\Game.java:491: warning: no comment
+src\com\game\model\Game.java:515: warning: no comment
 	public void setCpuPlayerList(List<Player> cpuPlayerList) {
 	            ^
-src\com\game\model\Game.java:531: warning: no comment
-	public static void setCurrentCard(Card currentCard) {
+src\com\game\model\Game.java:555: warning: no comment
+	public static void setCurrentCard(Card card) {
 	                   ^
-src\com\game\model\Game.java:539: warning: no comment
+src\com\game\model\Game.java:563: warning: no comment
 	public void setCurrentPlayer(Player currentPlayer) {
 	            ^
-src\com\game\model\Game.java:572: warning: no comment
+src\com\game\model\Game.java:596: warning: no comment
 	public void setCurrentPlayerIndex(int currentPlayerIndex) {
 	            ^
-src\com\game\model\Game.java:588: warning: no comment
+src\com\game\model\Game.java:612: warning: no comment
 	public static void setDeck(List<Card> deck) {
 	                   ^
-src\com\game\model\Game.java:483: warning: no comment
+src\com\game\model\Game.java:620: warning: no comment
+	public void setDefaultCPUPlayerList(List<Player> defaultCPUPlayerList) {
+	            ^
+src\com\game\model\Game.java:507: warning: no comment
 	public void setGameOver(boolean isGameOver) {
 	            ^
-src\com\game\model\Game.java:547: warning: no comment
+src\com\game\model\Game.java:571: warning: no comment
 	public void setNumPlayer(int numPlayer) {
 	            ^
-src\com\game\model\Game.java:515: warning: no comment
+src\com\game\model\Game.java:539: warning: no comment
 	public void setPlayers(List<Player> players) {
 	            ^
-src\com\game\model\Game.java:523: warning: no comment
+src\com\game\model\Game.java:547: warning: no comment
 	public void setPp(Player pp) {
 	            ^
-src\com\game\model\Game.java:580: warning: no comment
+src\com\game\model\Game.java:604: warning: no comment
 	public void setReversed(boolean isReversed) {
 	            ^
-src\com\game\model\Game.java:555: warning: no comment
+src\com\game\model\Game.java:579: warning: no comment
 	public void setSystemMsg(String key, Object... args) {
 	            ^
 Generating doc\com\game\ui\GameZoneUI.html...
 Generating doc\com\game\ui\LeaderboardUI.html...
-src\com\game\ui\LeaderboardUI.java:57: warning: no description for @param
+src\com\game\ui\LeaderboardUI.java:58: warning: no description for @param
 	 * @param players
 	   ^
-src\com\game\ui\LeaderboardUI.java:86: warning: no comment
+src\com\game\ui\LeaderboardUI.java:101: warning: no comment
 	public JLabel getLbl() {
 	              ^
-src\com\game\ui\LeaderboardUI.java:94: warning: no comment
+src\com\game\ui\LeaderboardUI.java:109: warning: no comment
 	public JLabel getPlayerLabel() {
 	              ^
-src\com\game\ui\LeaderboardUI.java:102: warning: no comment
+src\com\game\ui\LeaderboardUI.java:117: warning: no comment
 	public JLabel getScoreLabel() {
 	              ^
-src\com\game\ui\LeaderboardUI.java:90: warning: no comment
+src\com\game\ui\LeaderboardUI.java:105: warning: no comment
 	public void setLbl(JLabel lbl) {
 	            ^
-src\com\game\ui\LeaderboardUI.java:98: warning: no comment
+src\com\game\ui\LeaderboardUI.java:113: warning: no comment
 	public void setPlayerLabel(JLabel playerLabel) {
 	            ^
-src\com\game\ui\LeaderboardUI.java:106: warning: no comment
+src\com\game\ui\LeaderboardUI.java:121: warning: no comment
 	public void setScoreLabel(JLabel scoreLabel) {
 	            ^
 Generating doc\com\game\ui\MenuBarUI.html...
@@ -327,10 +321,13 @@ src\com\game\ui\MenuBarUI.java:144: warning: no comment
 src\com\game\ui\MenuBarUI.java:136: warning: no comment
 	public void setFour(JMenuItem four) {
 	            ^
+src\com\game\ui\MenuBarUI.java:184: warning: no comment
+	public void setGameMenu(JMenu gameMenu) {
+	            ^
+src\com\game\ui\MenuBarUI.java:168: warning: no comment
+	public void setGameMode(JMenu gameMode) {
+	            ^
 Generating doc\com\game\model\Player.html...
-src\com\game\model\Player.java:102: error: @param name not found
-	 * @param mark The points to add
-	          ^
 Generating doc\com\game\ui\UI.html...
 Generating doc\com\game\controller\package-summary.html...
 Generating doc\com\game\controller\package-tree.html...
@@ -348,5 +345,4 @@ Generating doc\index-all.html...
 Generating doc\search.html...
 Generating doc\overview-summary.html...
 Generating doc\help-doc.html...
-1 error
 100 warnings
